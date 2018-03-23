@@ -22,6 +22,13 @@ class SignIn extends React.Component {
     }
   }
 
+  clearForm() {
+    this.setState({
+      username: null,
+      password: null
+    })
+  }
+
   handleSubmit = () => {
     console.log(this.state.username, this.state.password)
     const user = {
@@ -30,6 +37,7 @@ class SignIn extends React.Component {
     }
 
     this.props.login(user)
+    this.clearForm()
   }
 
   render() {
@@ -48,8 +56,10 @@ class SignIn extends React.Component {
               style={styles.input}
               onChangeText={(username) => this.setState({username})}
               value={this.state.username}
+              keyboardType='email-address'
               underlineColorAndroid='transparent'
               placeholder = "Username"
+              autoCapitalize='none'
             />
             
             <TextInput
@@ -57,7 +67,8 @@ class SignIn extends React.Component {
               onChangeText={(password) => this.setState({password})}
               value={this.state.password}
               underlineColorAndroid='transparent'
-              placeholder = "Username"
+              secureTextEntry={true}
+              placeholder = "Password"
             />
             
             <TouchableOpacity

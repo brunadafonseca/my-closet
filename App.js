@@ -13,7 +13,7 @@ export default class App extends Component {
       <Provider store={store}>
         <Router>
           <Scene key='root'>
-            <Scene key="signIn" component={SignIn} initial={true} />
+            <Scene key="signIn" component={SignIn} initial={true} hideNavBar={true} />
           </Scene>
         </Router>
       </Provider>
