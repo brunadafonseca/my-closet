@@ -1,17 +1,20 @@
-import { LOGIN_SUCCESS, LOGIN_ERROR } from '../actions/user'
+import { LOGIN_SUCCESS, USER_SIGNED_OUT, LOGIN_ERROR } from '../actions/user'
 
-const INITIAL_STATE = {
-  loggedIn: false,
-  errorMessage: null,
-}
+// const currentUserkey = 'closetApiJWT'
+// const currentUserFromAsyncStorage = JSON.parse(
+  
+// )
 
-export default (state = INITIAL_STATE, { type, payload }) => {
+export default (state = {}, { type, payload }) => {
   switch(type) {
     case LOGIN_SUCCESS:
       console.log('success', payload)
       return Object.assign({}, state, {
-        loggedIn: payload
+        currentUser: payload
       })
+
+    case USER_SIGNED_OUT:
+      return null
 
     case LOGIN_ERROR:
       console.log('error', payload)

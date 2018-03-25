@@ -1,7 +1,7 @@
 import React from 'react';
 import { bindActionCreators } from 'redux'
 import { connect, Provider } from 'react-redux'
-import { login } from '../actions/user'
+import { signUp } from '../actions/user'
 import { 
   StyleSheet, 
   Text, 
@@ -30,13 +30,13 @@ class SignIn extends React.Component {
   }
 
   handleSubmit = () => {
-    console.log(this.state.username, this.state.password)
     const user = {
-      username: this.state.username,
+      name: 'bruna',
+      email: this.state.username,
       password: this.state.password
     }
 
-    this.props.login(user)
+    this.props.signUp(user)
     this.clearForm()
   }
 
@@ -85,11 +85,11 @@ class SignIn extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  hasCurrentUser: state.loggedIn,
-  hasError: state.errorMessage
+  currentUser: state.currentUser,
+  errorMessage: state.errorMessage
 })
 
-export default connect(mapStateToProps, { login })(SignIn)
+export default connect(mapStateToProps, { signUp })(SignIn)
 
 const styles = StyleSheet.create({
   outerContainer: {
