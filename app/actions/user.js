@@ -1,4 +1,5 @@
 import ApiClient from '../api/client'
+import { Actions } from 'react-native-router-flux'
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_ERROR = 'LOGIN_ERROR'
@@ -25,6 +26,8 @@ export function signIn({email, password}) {
 
         api.storeToken(jwt)
 
+        Actions.home()
+
         return api.get('users/me')
       })
       .then((res) => {
@@ -35,4 +38,13 @@ export function signIn({email, password}) {
         dispatch({ type: LOGIN_ERROR, payload: err.message})
       })
   } 
+}
+
+export function signOut() {
+  return dispatch => {
+    api.removeToken()
+      .then((res) => {
+        Actions.signIn()
+      })
+  }
 }

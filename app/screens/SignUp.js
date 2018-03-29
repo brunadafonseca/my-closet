@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { signIn } from '../actions/user'
+import { connect, Provider } from 'react-redux'
 import { Actions } from 'react-native-router-flux'
+import { signUp } from '../actions/user'
 import { 
   StyleSheet, 
   Text, 
@@ -12,41 +12,37 @@ import {
   ImageBackground,
   KeyboardAvoidingView
 } from 'react-native';
-import { defaultStyles } from '../../App.js'
 
-class SignIn extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
+      name: null,
       email: null,
       password: null,
+      passwordConfirmation: null,
     }
-  }
-
-  componentWillMount() {
-    const user = {
-      email: 'bartsunter',
-      password: 'cuzao'
-    }
-
-    this.props.signIn(user)
   }
 
   clearForm() {
     this.setState({
+      name: null,
       email: null,
       password: null,
+      passwordConfirmation: null
     })
   }
 
   handleSubmit = () => {
     const user = {
+      name: this.state.name,
       email: this.state.email,
       password: this.state.password,
+      passwordConfirmation: this.state.passwordConfirmation
     }
 
-    this.props.signIn(user)
+    this.props.signUp(user)
     this.clearForm()
   }
 
@@ -60,8 +56,16 @@ class SignIn extends Component {
           <View style={[styles.container, styles.opacity]}>
             <KeyboardAvoidingView
               behavior="padding"
-              style={{width: '100%'}}
+              style={{ width: '100%' }}
             >
+              <TextInput
+                style={styles.input}
+                onChangeText={(name) => this.setState({name})}
+                value={this.state.name}
+                underlineColorAndroid='transparent'
+                placeholder = "Name"
+              />
+
               <TextInput
                 style={styles.input}
                 onChangeText={(email) => this.setState({email})}
@@ -81,21 +85,31 @@ class SignIn extends Component {
                 placeholder = "Password"
               />
 
+              <TextInput
+                style={styles.input}
+                onChangeText={(passwordConfirmation) => this.setState({passwordConfirmation})}
+                value={this.state.passwordConfirmation}
+                underlineColorAndroid='transparent'
+                secureTextEntry={true}
+                placeholder = "Confirm password"
+              />
+              
               <TouchableOpacity
                 style={styles.button}
                 onPress={this.handleSubmit}
               >
-                <Text style={styles.buttonText}>SIGN IN</Text>
+              <Text style={styles.buttonText}>SIGN UP</Text>
               </TouchableOpacity>
             </KeyboardAvoidingView>
             
             <View style={{width: '100%', marginTop: 30}}>
               <Text style={{color: '#fff', fontSize: 18, alignSelf: 'center', marginBottom: 30}}>or</Text>
+              
               <TouchableOpacity
                 style={styles.button}
-                onPress={Actions.signUp}
+                onPress={Actions.signIn}
               >
-                <Text style={styles.buttonText}>SIGN UP</Text>
+                <Text style={styles.buttonText}>SIGN IN</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -109,7 +123,7 @@ const mapStateToProps = state => ({
   errorMessage: state.errorMessage
 })
 
-export default connect(mapStateToProps, { signIn })(SignIn)
+export default connect(mapStateToProps, { signUp })(SignUp)
 
 const styles = StyleSheet.create({
   outerContainer: {

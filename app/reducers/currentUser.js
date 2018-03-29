@@ -9,9 +9,7 @@ export default (state = {}, { type, payload }) => {
   switch(type) {
     case LOGIN_SUCCESS:
       console.log('success', payload)
-      return Object.assign({}, state, {
-        currentUser: payload
-      })
+      return Object.assign({}, state, payload)
 
     case USER_SIGNED_OUT:
       return null
